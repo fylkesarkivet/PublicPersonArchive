@@ -1,0 +1,211 @@
+﻿@model PersonArchive.Web.Models.ViewModels.PersonDetailsViewModel
+
+<div class="row">
+	<div class="col-md-12">
+		<a asp-controller="Rdf"
+		   asp-action="PersonTriples"
+		   asp-route-personGuid="@Model.Person.PersonGuid">
+			<div class="thing-iri-box">
+				<p>https://resource.fylkesarkivet.no/person/@Model.Person.PersonGuid.ToString()#</p>
+			</div>
+		</a>
+	</div>
+	<div class="col-md-6">
+		<div class="content-box-conatiner">
+			<div class="content-box">
+				<h2><i class="fas fa-user"></i>Person</h2>
+				<div class="edit-delete-buttons">
+					<a asp-controller="Person"
+					   asp-action="Edit"
+					   asp-route-personGuid="@Model.Person.PersonGuid"
+					   class="btn btn-default"
+					   role="button">
+						<i class="fas fa-edit" title="Rediger person"></i>
+					</a>
+					<a asp-controller="Person"
+					   asp-action="Delete"
+					   asp-route-personGuid="@Model.Person.PersonGuid"
+					   class="btn btn-default"
+					   role="button">
+						<i class="fas fa-trash-alt" title="Slett person"></i>
+					</a>
+				</div>
+				<hr/>
+				<div class="content-box-list-item with-label">
+					<h3>@Model.DisplayGender</h3>
+					<p>Kjønn</p>
+				</div>
+			</div>
+		</div>
+		<div class="content-box-conatiner">
+			<div class="content-box">
+				<h2><i class="fas fa-history"></i>@Model.FluffyDateTitle</h2>
+
+				<div class="add-button">
+					@if (Model.ItIsPossibleToAddMoreFluffyDates)
+					{
+						<a asp-controller="PersonFluffyDate"
+						   asp-action="Create"
+						   asp-route-personGuid="@Model.Person.PersonGuid"
+						   class="btn btn-default"
+						   role="button">
+							<i class="fas fa-plus" title="Legg til ny dato"></i>
+						</a>
+					}
+					else
+					{
+						<button type="button" class="btn btn-default" disabled="disabled">
+							<i class="fas fa-plus" title="Maks to datoar"></i>
+						</button>
+					}
+				</div>
+
+				@if (Model.Person.FluffyDates != null && Model.Person.FluffyDates.Any())
+				{
+					<hr/>
+					foreach (var fluffyDate in Model.DisplayFluffyDates)
+					{
+						<div class="content-box-list-item with-label">
+							<h3>@fluffyDate.Date</h3>
+							<p>@fluffyDate.Type</p>
+							<div class="content-box-list-item-edit-delete-buttons">
+								<a asp-controller="PersonFluffyDate"
+								   asp-action="Edit"
+								   asp-route-personFluffyDateId="@fluffyDate.PersonFluffyDateId"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-edit" title="Rediger dato"></i>
+								</a>
+								<a asp-controller="PersonFluffyDate"
+								   asp-action="Delete"
+								   asp-route-personFluffyDateId="@fluffyDate.PersonFluffyDateId"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-trash-alt" title="Slett dato"></i>
+								</a>
+							</div>
+						</div>
+						if (!fluffyDate.LastItemInList)
+						{
+							<hr/>
+						}
+					}
+				}
+			</div>
+		</div>
+		<div class="content-box-conatiner">
+			<div class="content-box">
+				<h2><i class="fas fa-tags"></i>Namn</h2>
+
+				<div class="add-button">
+					<a asp-controller="PersonName"
+					   asp-action="Create"
+					   asp-route-personGuid="@Model.Person.PersonGuid"
+					   class="btn btn-default"
+					   role="button">
+						<i class="fas fa-plus" title="Legg til nytt namn"></i>
+					</a>
+				</div>
+
+				@if (Model.Person.Names != null && Model.Person.Names.Any())
+				{
+					<hr/>
+					foreach (var name in Model.DisplayPersonNames)
+					{
+						<div class="content-box-list-item with-label">
+							<h3>@name.FullName</h3>
+							<ul>
+								@foreach (var nameSplit in name.NameSplitUpInList)
+								{
+									<li>@nameSplit</li>
+								}
+							</ul>
+							<div class="content-box-list-item-edit-delete-buttons">
+								<a asp-controller="PersonName"
+								   asp-action="Edit"
+								   asp-route-personNameId="@name.Id"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-edit" title="Rediger namn"></i>
+								</a>
+								<a asp-controller="PersonName"
+								   asp-action="Delete"
+								   asp-route-personNameId="@name.Id"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-trash-alt" title="Slett namn"></i>
+								</a>
+							</div>
+						</div>
+						if (!name.LastItemInList)
+						{
+							<hr/>
+						}
+					}
+				}
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="content-box-conatiner">
+			<div class="content-box">
+				<h2><i class="fas fa-align-left"></i>Biografi</h2>
+
+				<div class="add-button">
+					@if (Model.ItIsPossibleToAddMoreDescriptions)
+					{
+						<a asp-controller="PersonDescription"
+						   asp-action="Create"
+						   asp-route-personGuid="@Model.Person.PersonGuid"
+						   class="btn btn-default"
+						   role="button">
+							<i class="fas fa-plus" title="Legg til beskrivelse"></i>
+						</a>
+					}
+					else
+					{
+						<button type="button" class="btn btn-default" disabled="disabled">
+							<i class="fas fa-plus" title="Maks to beskrivelsar"></i>
+						</button>
+					}
+				</div>
+
+				@if (Model.Person.Descriptions != null && Model.Person.Descriptions.Any())
+				{
+					<hr/>
+					foreach (var description in Model.DisplayPersonDescriptions)
+					{
+						<div class="content-box-list-item description">
+							<h3>@description.Language</h3>
+							<p>@description.Text</p>
+							<div class="content-box-list-item-edit-delete-buttons">
+								<a asp-controller="PersonDescription"
+								   asp-action="Edit"
+								   asp-route-personDescriptionId="@description.Id"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-edit" title="Rediger beskrivelse"></i>
+								</a>
+								<a asp-controller="PersonDescription"
+								   asp-action="Delete"
+								   asp-route-personDescriptionId="@description.Id"
+								   class="btn btn-default"
+								   role="button">
+									<i class="fas fa-trash-alt" title="Slett beskrivelse"></i>
+								</a>
+							</div>
+						</div>
+						if (!description.LastItemInList)
+						{
+							<hr/>
+						}
+					}
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Person/Details.css" />
+}

@@ -1,0 +1,13 @@
+﻿@model PersonArchive.Web.Models.ViewModels.Rdf.PersonTriplesViewModel
+
+@{
+	ViewData["Title"] = "RDF Turtle";
+}
+
+<h1>@ViewData["Title"]</h1>
+<pre><code>@Model.TriplesAsText</code></pre>
+<div>
+	<a asp-controller="Person" 
+	   asp-action="Details" 
+	   asp-route-personGuid="@Model.PersonGuid">Detaljeside</a>
+</div>

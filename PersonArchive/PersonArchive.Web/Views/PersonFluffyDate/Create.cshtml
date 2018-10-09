@@ -1,0 +1,82 @@
+﻿@using PersonArchive.Web.Models.Helpers
+@model PersonArchive.Web.Models.CreateModels.PersonFluffyDateCreateModel
+
+@{
+	ViewData["Title"] = "Legg til ny dato";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-8">
+				<h1>@ViewData["Title"]</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="row">
+				@Html.LabelFor(m => m.Year, "År", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Year)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Month, "Månad", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Month, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Month)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Day, "Dag", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Day, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Day)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Type, "Type", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.DropDownListFor(model =>
+						model.Type,
+						@Html.GetEnumSelectList(typeof(PersonFluffyDateTypeOptions)),
+						"-- Kva type dato er dette? --",
+						new {@class = "form-control"})
+					@Html.ValidationMessageFor(m => m.Type)
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-abort-or-submit-buttons-wrapper">
+					<div class="col-md-4">
+						<p>
+							<a asp-controller="Person"
+							   asp-action="Details"
+							   asp-route-personGuid="@ViewData["PersonGuid"]">Avbryt</a>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<input type="submit" value="Legg til ny dato" class="btn btn-default" />
+					</div>
+				</div>
+			</div>
+			@Html.AntiForgeryToken()
+		</form>
+	</div>
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-4">
+		<div class="info-box-wrapper">
+			<p>Les meir om dato på <a href="https://nn.wikipedia.org/wiki/Dato" target="_blank">Wikipedia <i class="fas fa-external-link-alt"></i></a>.</p>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Shared/form.css" />
+}

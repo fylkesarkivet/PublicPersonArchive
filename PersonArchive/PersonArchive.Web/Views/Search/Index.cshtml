@@ -1,0 +1,160 @@
+﻿@model PersonArchive.Web.Models.ViewModels.Search.IndexViewModel
+
+@{
+	ViewData["Title"] = "Søk personar";
+}
+
+<div class="row">
+	<form method="get">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<div class="search-field-wrapper">
+				<div class="form-inline">
+					<div class="form-group-lg">
+						<input type="text"
+						       asp-for="s"
+						       class="form-control"
+						       placeholder="Søk på eit namn"/>
+						<span asp-validation-for="s"></span>
+					</div>
+				</div>
+				@if (Model.DisplayFilterText)
+				{
+					<div class="form-inline filter-text-wrapper">
+						<div class="form-group-lg">
+							<input type="text"
+							       asp-for="f"
+							       class="form-control"
+							       placeholder="Filter"/>
+							<span asp-validation-for="f"></span>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+		<div class="col-md-3">
+			<button type="submit" class="btn btn-primary btn-lg">Søk</button>
+		</div>
+	</form>
+</div>
+<hr />
+<div class="row">
+	<div class="col-md-3">
+		@if (Model.FacetItemsInSearchResult.Any())
+		{
+			<div class="facet-gender-items-wrapper">
+				<div class="facet-gender-items">
+					<p>Kjønn</p>
+					<ul>
+						@foreach (var facet in Model.FacetItemsInSearchResult)
+						{
+							if (facet.DisplayWithLink)
+							{
+								<li>
+									<a asp-controller="Search"
+									   asp-action="Index"
+									   asp-route-s="@Model.SearchText"
+									   asp-route-f="gender eq '@facet.Type'">
+										@facet.Label (@facet.Count)
+									</a>
+								</li>
+							}
+							else
+							{
+								<li>@facet.Label (@facet.Count)</li>
+							}
+						}
+					</ul>
+				</div>
+			</div>
+		}
+	</div>
+	<div class="col-md-6">
+		@if (Model.DisplaySearchResult)
+		{
+			foreach (var personItem in Model.PersonItemsInSearchResult)
+			{
+				<a asp-controller="Person"
+				   asp-action="Details"
+				   asp-route-personGuid="@personItem.PersonGuid">
+					<div class="search-result-item-wrapper">
+
+						<div class="item-info-wrapper">
+							<div class="gender">
+								@if (personItem.Gender.Equals("Male"))
+								{
+									<p><i class="fas fa-male"></i></p>
+								}
+								else if (personItem.Gender.Equals("Female"))
+								{
+									<p><i class="fas fa-female"></i></p>
+								}
+								else if (personItem.Gender.Equals("GenderVariant"))
+								{
+									<p><i class="fas fa-transgender"></i></p>
+								}
+								else
+								{
+									<p><i class="fas fa-question"></i></p>
+								}
+							</div>
+
+							<div class="era">
+								@if (!string.IsNullOrWhiteSpace(personItem.YearOfBirth) ||
+									!string.IsNullOrWhiteSpace(personItem.YearOfDeath))
+								{
+									<ul>
+										<li>@personItem.YearOfBirth</li>
+										<li>@personItem.YearOfDeath</li>
+									</ul>
+								}
+							</div>
+
+							<div class="age">
+								@if (!string.IsNullOrWhiteSpace(personItem.Age))
+								{
+									<ul>
+										<li>@personItem.Age</li>
+										<li><i class="fas fa-history"></i></li>
+									</ul>
+								}
+							</div>
+						</div>
+
+						@if (personItem.Names.Any())
+						{
+							<div class="item-bottom-wrapper">
+								<ul>
+									@foreach (var name in personItem.Names)
+									{
+										<li>@Html.Raw(name)</li>
+									}
+								</ul>
+							</div>
+						}
+					</div>
+				</a>
+			}
+		}
+		else if (Model.SearchHaveBeenConducted)
+		{
+			<div class="info-box-wrapper">
+				<p>Fant ikkje namnet.</p>
+			</div>
+		}
+		else
+		{
+			<div class="info-box-wrapper">
+				<p>Tips: Bruk stjerne (*) for å søkje på delar av eit namn.</p>
+			</div>
+		}
+	</div>
+	<div class="col-md-3">
+		@*<p>Treff: @Model.NumberOfItemsOnThisPage av @Model.NumberOfItemsInSearchResult</p>*@
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Search/Index.css" />
+}

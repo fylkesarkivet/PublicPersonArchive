@@ -1,0 +1,84 @@
+﻿@model PersonArchive.Web.Models.CreateModels.PersonNameCreateModel
+
+@{
+	ViewData["Title"] = "Legg til nytt namn";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-8">
+				<h1>@ViewData["Title"]</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="row">
+				@Html.LabelFor(m => m.Prefix, "Prefix", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Prefix, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Prefix)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.First, "Fornamn", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.First, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.First)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Middle, "Mellomnamn", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Middle, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Middle)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Last, "Etternamn", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Last, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Last)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Suffix, "Suffix", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextBoxFor(m => m.Suffix, new { @class = "form-control" })
+					@Html.ValidationMessageFor(m => m.Suffix)
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-abort-or-submit-buttons-wrapper">
+					<div class="col-md-4">
+						<p>
+							<a asp-controller="Person"
+							   asp-action="Details"
+							   asp-route-personGuid="@ViewData["PersonGuid"]">Avbryt</a>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<input type="submit" value="Legg til nytt namn" class="btn btn-default" />
+					</div>
+				</div>
+			</div>
+			@Html.AntiForgeryToken()
+		</form>
+	</div>
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-4">
+		<div class="info-box-wrapper">
+			<p>Les meir om person-namn på <a href="https://en.wikipedia.org/wiki/Personal_name" target="_blank">Wikipedia <i class="fas fa-external-link-alt"></i></a>.</p>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Shared/form.css" />
+}

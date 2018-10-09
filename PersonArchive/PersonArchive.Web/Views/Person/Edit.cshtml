@@ -1,0 +1,61 @@
+﻿@using PersonArchive.Web.Models.Helpers
+@model PersonArchive.Web.Models.EditModels.PersonEditModel
+
+@{
+	ViewData["Title"] = "Rediger person";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-8">
+				<h1>@ViewData["Title"]</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="row">
+				@Html.LabelFor(m => m.GenderType, "Kjønn", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.DropDownListFor(model =>
+						model.GenderType,
+						@Html.GetEnumSelectList(typeof(PersonGenderTypeOptions)),
+						"-- Kva kjønn har personen? --",
+						new {@class = "form-control"})
+					@Html.ValidationMessageFor(m => m.GenderType)
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-abort-or-submit-buttons-wrapper">
+					<div class="col-md-4">
+						<p>
+							<a asp-controller="Person"
+							   asp-action="Details"
+							   asp-route-personGuid="@ViewData["PersonGuid"]">Avbryt</a>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<input type="submit" value="Rediger person" class="btn btn-default" />
+					</div>
+				</div>
+			</div>
+			@Html.AntiForgeryToken()
+		</form>
+	</div>
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-4">
+		<div class="info-box-wrapper">
+			<p>Biologisk kjønn på menneske grupperast vanlegvis som mann (han) eller kvinne (ho) ut frå dei ytre kjønnskjenneteikna. Les meir om gruppering av kjønn på <a href="https://nn.wikipedia.org/wiki/Kj%C3%B8nn" target="_blank">Wikipedia <i class="fas fa-external-link-alt"></i></a>.</p>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Shared/form.css" />
+}

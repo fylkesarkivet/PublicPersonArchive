@@ -1,0 +1,15 @@
+﻿@{
+	ViewData["Title"] = "Slett namn";
+}
+<h1>@ViewData["Title"]</h1>
+
+<form method="post" >
+	<input type="submit" value="Slett namn" />
+	@Html.AntiForgeryToken()
+</form>
+
+<div>
+	<a asp-controller="Person"
+	   asp-action="Details"
+	   asp-route-personGuid="@ViewData["PersonGuid"]">Avbryt</a>
+</div>

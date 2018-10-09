@@ -1,0 +1,70 @@
+﻿@using PersonArchive.Web.Models.Helpers
+@model PersonArchive.Web.Models.EditModels.PersonDescriptionEditModel
+
+@{
+	ViewData["Title"] = "Rediger biografi";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-4">
+			</div>
+			<div class="col-md-8">
+				<h1>@ViewData["Title"]</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<form method="post">
+			<div class="row">
+				@Html.LabelFor(m => m.Text, "Tekst", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = "6" })
+					@Html.ValidationMessageFor(m => m.Text)
+				</div>
+			</div>
+			<div class="row">
+				@Html.LabelFor(m => m.Type, "Språk", new { @class = "col-md-4 control-label" })
+				<div class="col-md-8">
+					@Html.DropDownListFor(model =>
+						model.Type,
+						@Html.GetEnumSelectList(typeof(PersonDescriptionTypeOptions)),
+						"-- Kva språk har teksten? --",
+						new {@class = "form-control"})
+					@Html.ValidationMessageFor(m => m.Type)
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-abort-or-submit-buttons-wrapper">
+					<div class="col-md-4">
+						<p>
+							<a asp-controller="Person"
+							   asp-action="Details"
+							   asp-route-personGuid="@ViewData["PersonGuid"]">Avbryt</a>
+						</p>
+					</div>
+					<div class="col-md-8">
+						<input type="submit" value="Rediger biografi" class="btn btn-default" />
+					</div>
+				</div>
+			</div>
+			@Html.AntiForgeryToken()
+		</form>
+	</div>
+	<div class="col-md-2">
+	</div>
+	<div class="col-md-4">
+		<div class="info-box-wrapper">
+			<p>Biografi eller livsskildring har til føremål å skildre livet til eit enkeltmenneske.</p>
+			<p>Teksten skal her vere kortfatta for ein enkel presentasjon.</p>
+			<p>Les meir om biografi på <a href="https://no.wikipedia.org/wiki/Biografi" target="_blank">Wikipedia <i class="fas fa-external-link-alt"></i></a>.</p>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Shared/form.css" />
+}

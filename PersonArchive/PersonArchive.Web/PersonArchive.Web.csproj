@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\Shared\form.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.1.0-preview1-final" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PersonArchive.DataTripleStore\PersonArchive.DataTripleStore.csproj" />
+    <ProjectReference Include="..\PersonArchive.Entities\PersonArchive.Entities.csproj" />
+    <ProjectReference Include="..\PersonArchive.Logic\PersonArchive.Logic.csproj" />
+    <ProjectReference Include="..\PersonArchive.SearchStore\PersonArchive.SearchStore.csproj" />
+  </ItemGroup>
+
+</Project>

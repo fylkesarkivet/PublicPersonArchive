@@ -1,0 +1,100 @@
+﻿@model PersonArchive.Web.Models.ViewModels.PersonListViewModel
+
+@{
+	ViewData["Title"] = "Alle personar";
+}
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="box-with-items-wrapper">
+			<div class="box-with-items">
+				<p>Legg til</p>
+				<ul>
+					<li>
+						<a asp-controller="Person"
+						   asp-action="Create">
+							Person
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		@if (Model.DisplayPersonItems)
+		{
+			foreach (var personItem in Model.PersonItems)
+			{
+				<a asp-controller="Person"
+				   asp-action="Details"
+				   asp-route-personGuid="@personItem.PersonGuid">
+					<div class="search-result-item-wrapper">
+
+						<div class="item-info-wrapper">
+							<div class="gender">
+								@if (personItem.Gender.Equals("Male"))
+								{
+									<p><i class="fas fa-male"></i></p>
+								}
+								else if (personItem.Gender.Equals("Female"))
+								{
+									<p><i class="fas fa-female"></i></p>
+								}
+								else if (personItem.Gender.Equals("GenderVariant"))
+								{
+									<p><i class="fas fa-transgender"></i></p>
+								}
+								else
+								{
+									<p><i class="fas fa-question"></i></p>
+								}
+							</div>
+
+							<div class="era">
+								@if (!string.IsNullOrWhiteSpace(personItem.YearOfBirth) ||
+								   !string.IsNullOrWhiteSpace(personItem.YearOfDeath))
+								{
+									<ul>
+										<li>@personItem.YearOfBirth</li>
+										<li>@personItem.YearOfDeath</li>
+									</ul>
+								}
+							</div>
+
+							<div class="age">
+								@if (!string.IsNullOrWhiteSpace(personItem.Age))
+								{
+									<ul>
+										<li>@personItem.Age</li>
+										<li><i class="fas fa-history"></i></li>
+									</ul>
+								}
+							</div>
+						</div>
+
+						@if (personItem.Names.Any())
+						{
+							<div class="item-bottom-wrapper">
+								<ul>
+									@foreach (var name in personItem.Names)
+									{
+										<li>@Html.Raw(name)</li>
+									}
+								</ul>
+							</div>
+						}
+					</div>
+				</a>
+			}
+		}
+	</div>
+	<div class="col-md-3">
+		<div class="info-box-wrapper">
+			<p>Denne lista syner dei siste ti registrerte personane.</p>
+		</div>
+	</div>
+</div>
+
+@section CustomCss {
+	<link rel="stylesheet" href="~/css/Home/PersonList.css" />
+}
