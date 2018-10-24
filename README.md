@@ -20,4 +20,4 @@ The linked data section is built with [dotNetRDF](https://www.dotnetrdf.org/). I
 
 The logic section is covered with unit tests. Those are written using [xUnit.net v2](https://xunit.github.io/), which is "a free, open source, community-focused unit testing tool for the .NET Framework".
 
-The demo application is deployed on [Windows Server 2016](https://en.wikipedia.org/wiki/Windows_Server) with the [Internet Information Services (IIS)](https://en.wikipedia.org/wiki/Internet_Information_Services).
+The demo application is deployed on [Windows Server 2016](https://en.wikipedia.org/wiki/Windows_Server) with [Internet Information Services (IIS)](https://en.wikipedia.org/wiki/Internet_Information_Services).
